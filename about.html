@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About KoMo 🌸</title>
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300;400;500;600;700&family=Nunito:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+
+  <style>
+    /* ── MEET US SECTION ── */
+    .meet-section {
+      padding: 0 8% 80px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .meet-card {
+      background: rgba(255,255,255,0.75);
+      border-radius: var(--radius-xl);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      box-shadow: var(--shadow-md);
+      border: 1.5px solid rgba(255,255,255,0.7);
+      overflow: hidden;
+      display: flex;
+      flex-wrap: wrap;
+    }
+
+    .meet-photo-wrap {
+      flex: 1;
+      min-width: 280px;
+      max-width: 480px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .meet-photo-wrap img {
+      width: 100%;
+      height: 100%;
+      min-height: 380px;
+      object-fit: cover;
+      object-position: center top;
+      display: block;
+      transition: transform 0.6s ease;
+    }
+
+    .meet-photo-wrap:hover img {
+      transform: scale(1.04);
+    }
+
+    .meet-photo-badge {
+      position: absolute;
+      bottom: 18px;
+      left: 18px;
+      background: rgba(255,255,255,0.92);
+      backdrop-filter: blur(8px);
+      border-radius: 50px;
+      padding: 8px 18px;
+      font-family: 'Fredoka', sans-serif;
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--lavender-dk);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .meet-text {
+      flex: 1;
+      min-width: 280px;
+      padding: 50px 50px 50px 44px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .meet-text .eyebrow {
+      display: inline-block;
+      background: var(--blush);
+      color: var(--lavender-dk);
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      padding: 5px 14px;
+      border-radius: 50px;
+      margin-bottom: 18px;
+    }
+
+    .meet-text h2 {
+      font-family: 'Fredoka', sans-serif;
+      font-size: 38px;
+      font-weight: 700;
+      color: var(--lavender-dk);
+      margin-bottom: 20px;
+      line-height: 1.2;
+    }
+
+    .meet-text p {
+      font-size: 17px;
+      line-height: 1.85;
+      color: var(--text-soft);
+      margin-bottom: 14px;
+    }
+
+    .meet-text .quote-pull {
+      border-left: 4px solid var(--blush-dk);
+      padding-left: 18px;
+      font-style: italic;
+      color: var(--lavender-dk);
+      font-size: 17px;
+      margin: 20px 0 26px;
+      line-height: 1.75;
+    }
+
+    /* ── CONTACT BUTTON ── */
+    .contact-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      border: none;
+      padding: 15px 30px;
+      border-radius: 50px;
+      background: var(--lavender-dk);
+      color: white;
+      font-size: 17px;
+      font-family: 'Fredoka', sans-serif;
+      font-weight: 600;
+      cursor: pointer;
+      transition: var(--transition);
+      box-shadow: 0 6px 24px rgba(143,114,218,0.4);
+      width: fit-content;
+      margin-top: 8px;
+    }
+
+    .contact-btn:hover {
+      background: #7d5ed4;
+      transform: translateY(-3px);
+      box-shadow: 0 10px 30px rgba(143,114,218,0.5);
+    }
+
+    /* ── CONTACT MODAL OVERLAY ── */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(74, 63, 107, 0.45);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      z-index: 999;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+
+    .modal-overlay.open {
+      display: flex;
+      animation: fadeOverlay 0.25s ease;
+    }
+
+    @keyframes fadeOverlay {
+      from { opacity: 0; }
+      to   { opacity: 1; }
+    }
+
+    .modal-box {
+      background: white;
+      border-radius: var(--radius-xl);
+      padding: 50px 44px 44px;
+      max-width: 440px;
+      width: 100%;
+      box-shadow: var(--shadow-lg);
+      position: relative;
+      animation: popIn 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+      text-align: center;
+    }
+
+    @keyframes popIn {
+      from { opacity: 0; transform: scale(0.85) translateY(20px); }
+      to   { opacity: 1; transform: scale(1) translateY(0); }
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 18px;
+      right: 22px;
+      background: var(--lavender-lt);
+      border: none;
+      border-radius: 50%;
+      width: 36px;
+      height: 36px;
+      font-size: 18px;
+      cursor: pointer;
+      color: var(--lavender-dk);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.2s;
+    }
+    .modal-close:hover { background: var(--blush); }
+
+    .modal-icon {
+      font-size: 52px;
+      margin-bottom: 14px;
+      display: block;
+    }
+
+    .modal-box h3 {
+      font-family: 'Fredoka', sans-serif;
+      font-size: 28px;
+      color: var(--lavender-dk);
+      margin-bottom: 8px;
+    }
+
+    .modal-box > p {
+      font-size: 15px;
+      color: var(--text-soft);
+      margin-bottom: 28px;
+    }
+
+    .contact-option {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      background: var(--lavender-lt);
+      border-radius: var(--radius-md);
+      padding: 18px 22px;
+      margin-bottom: 14px;
+      text-decoration: none;
+      transition: var(--transition);
+      text-align: left;
+    }
+
+    .contact-option:last-of-type { margin-bottom: 0; }
+
+    .contact-option:hover {
+      background: var(--blush);
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .contact-option .co-icon {
+      font-size: 30px;
+      flex-shrink: 0;
+    }
+
+    .contact-option .co-text strong {
+      display: block;
+      font-family: 'Fredoka', sans-serif;
+      font-size: 17px;
+      color: var(--lavender-dk);
+      margin-bottom: 3px;
+    }
+
+    .contact-option .co-text span {
+      font-size: 14px;
+      color: var(--text-soft);
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 700px) {
+      .meet-text { padding: 36px 28px; }
+      .meet-text h2 { font-size: 30px; }
+      .meet-photo-wrap { max-width: 100%; }
+      .meet-photo-wrap img { min-height: 260px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- FLOATING DECOR -->
+<div class="sparkle s1">✨</div>
+<div class="sparkle s2">🌸</div>
+<div class="sparkle s3">💜</div>
+<div class="sparkle s4">☁️</div>
+
+<!-- HEADER -->
+<header>
+  <a class="logo-section" href="index.html" style="text-decoration:none;">
+    <img src="logo.png" alt="KoMo logo">
+    <h1>KoMo</h1>
+  </a>
+  <nav>
+    <a class="simple-link" href="index.html">🏠 Home</a>
+    <a class="simple-link" href="journal.html">📔 Journal</a>
+    <a class="simple-link" href="memorylane.html">📸 Memory Lane</a>
+  </nav>
+</header>
+
+<!-- ═══════════════════════════════════════════
+     ABOUT INTRO CARD
+     Edit the main description paragraph below
+     ═══════════════════════════════════════════ -->
+<section class="page-section">
+  <div class="page-card fade-up">
+    <h2>About KoMo 🌸</h2>
+    <p>KoMo is a cozy safe space where teenagers can express emotions, connect, journal memories, and capture special moments 💜 We believe every feeling is valid and every memory is worth keeping.</p>
+
+    <div class="about-grid" style="margin-top:44px;">
+      <div class="about-item fade-up" style="transition-delay:0.05s;">
+        <span class="icon">🌸</span>
+        <h3>Safe Expression</h3>
+        <p>A judgment-free zone to write, feel, and grow. Your thoughts are yours — always private, always valued.</p>
+      </div>
+      <div class="about-item fade-up" style="transition-delay:0.15s;">
+        <span class="icon">📸</span>
+        <h3>Capture Moments</h3>
+        <p>Life is full of beautiful moments. KoMo's photobooth helps you hold onto them with filters and cute frames.</p>
+      </div>
+      <div class="about-item fade-up" style="transition-delay:0.25s;">
+        <span class="icon">💜</span>
+        <h3>Made With Love</h3>
+        <p>Every pixel of KoMo is designed with care — because you deserve a space that feels like a warm hug.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     MEET THE TEAM SECTION
+     — To change the PHOTO: replace "team.jpg" with your image file
+       (keep the image in the same folder as this HTML file)
+     — To change the TEXT: edit inside the <p> tags and quote-pull div
+     — To change the CONTACT details: scroll down to the modal section
+     ═══════════════════════════════════════════════════════════════ -->
+<section class="meet-section">
+  <div class="meet-card fade-up">
+
+    <!-- LEFT: TEAM PHOTO -->
+    <div class="meet-photo-wrap">
+      <img src="team.jpg" alt="The KoMo Team">
+      <div class="meet-photo-badge">💜 The KoMo Crew</div>
+    </div>
+
+    <!-- RIGHT: TEAM MESSAGE -->
+    <div class="meet-text">
+      <span class="eyebrow">👋 Meet the Team</span>
+      <h2>Haii, Welcome to KoMo! 🌸</h2>
+
+      <!-- ↓ Edit the quote text here -->
+      <div class="quote-pull">
+        "KoMo — which stands for <strong>Cozy Moments</strong> — is a fun digital integrated game and website card play to help connect and keep in touch with your feelings."
+      </div>
+
+      <!-- ↓ Edit the body paragraphs here -->
+      <p>
+        We're a small team of teens who believe that every emotion deserves a safe, beautiful place to live. KoMo was born from late-night study sessions, heartfelt conversations, and a shared love for all things kozy 💜
+      </p>
+      <p>
+        Whether you're journaling a big feeling, snapping a silly photobooth moment, or just looking for a cozy corner of the internet — we made this space for <em>you</em> ✨
+      </p>
+
+      <!-- CONTACT BUTTON — opens the popup modal below -->
+      <button class="contact-btn" onclick="openContact()">
+        💌 Get In Touch
+      </button>
+    </div>
+
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <span>Made with 🌸💜☁️ by KoMo</span>
+  <div class="footer-links">
+    <a href="index.html">Home</a>
+    <a href="journal.html">Journal</a>
+    <a href="memorylane.html">Memory Lane</a>
+    <a href="about.html">About</a>
+  </div>
+</footer>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     CONTACT POPUP MODAL
+     — To change the WhatsApp number: edit the href="https://wa.me/XXXXXX"
+       AND the <span> number text below it
+     — To change the email: edit href="mailto:XXXX" AND the <span> text
+     ═══════════════════════════════════════════════════════════════ -->
+<div class="modal-overlay" id="contactModal" onclick="closeOnOverlay(event)">
+  <div class="modal-box">
+
+    <button class="modal-close" onclick="closeContact()">✕</button>
+
+    <span class="modal-icon">💌</span>
+    <h3>Say Hi to KoMo!</h3>
+    <p>We'd love to hear from you — reach us anytime 🌸</p>
+
+    <!-- WhatsApp link — edit the number after wa.me/ (no spaces or dashes) -->
+    <a class="contact-option" href="https://wa.me/62878898766987" target="_blank" rel="noopener">
+      <span class="co-icon">💬</span>
+      <div class="co-text">
+        <strong>WhatsApp Us</strong>
+        <span>0878 8987 66987</span>
+      </div>
+    </a>
+
+    <!-- Email link — edit the address in mailto: and in the span -->
+    <a class="contact-option" href="mailto:KoMo.hq@gmail.com">
+      <span class="co-icon">📧</span>
+      <div class="co-text">
+        <strong>Email Us</strong>
+        <span>KoMo.hq@gmail.com</span>
+      </div>
+    </a>
+
+  </div>
+</div>
+
+<script src="auth.js"></script>
+<script src="script.js"></script>
+<script>
+  /* ── Contact modal controls ── */
+  function openContact() {
+    document.getElementById('contactModal').classList.add('open');
+    document.body.style.overflow = 'hidden'; // stop page scrolling behind modal
+  }
+
+  function closeContact() {
+    document.getElementById('contactModal').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  // Close when clicking the dark background
+  function closeOnOverlay(e) {
+    if (e.target === document.getElementById('contactModal')) closeContact();
+  }
+
+  // Close with the Escape key
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') closeContact();
+  });
+</script>
+</body>
+</html>

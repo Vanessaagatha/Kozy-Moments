@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Journal Space — KoMo 📔</title>
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300;400;500;600;700&family=Nunito:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<!-- FLOATING DECOR -->
+<div class="sparkle s1">✨</div>
+<div class="sparkle s2">🌸</div>
+<div class="sparkle s3">💜</div>
+<div class="sparkle s4">☁️</div>
+
+<!-- HEADER -->
+<header>
+  <a class="logo-section" href="index.html" style="text-decoration:none;">
+    <img src="logo.png" alt="KoMo logo">
+    <h1>KoMo</h1>
+  </a>
+  <nav>
+    <a class="simple-link" href="index.html">🏠 Home</a>
+    <a class="simple-link" href="about.html">💜 About</a>
+    <a class="simple-link" href="memorylane.html">📸 Memory Lane</a>
+  </nav>
+</header>
+
+<!-- JOURNAL SECTION -->
+<section class="journal">
+  <div class="journal-inner fade-up">
+    <h2>How Do You Feel Today? 🌸</h2>
+
+    <!-- ACCOUNT BANNER -->
+    <div id="journalBanner" class="journal-banner"></div>
+
+    <!-- DATE -->
+    <div class="date-box">
+      <label>📅 Pick Your Memory Date ✨</label>
+      <input type="date" id="journalDate">
+    </div>
+
+    <!-- MOOD PICKER (default + your own custom emojis) -->
+    <label class="mood-heading">🌈 Pick your mood — or make your own!</label>
+    <div class="moods" id="moodRow"></div>
+
+    <p id="moodText"></p>
+
+    <!-- JOURNAL TEXTAREA -->
+    <textarea id="journalText" placeholder="Write your thoughts here… this is your safe space 🌸"></textarea>
+
+    <!-- PHOTO PREVIEW (from memory lane) -->
+    <div id="photoPreview"></div>
+
+    <!-- SAVE BUTTON -->
+    <button class="save-journal" onclick="saveJournal()">💾 Save Memory</button>
+
+    <!-- ENTRIES LIST -->
+    <div id="journalEntries"></div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <span>Made with 🌸💜☁️ by KoMo</span>
+  <div class="footer-links">
+    <a href="index.html">Home</a>
+    <a href="journal.html">Journal</a>
+    <a href="memorylane.html">Memory Lane</a>
+    <a href="about.html">About</a>
+  </div>
+</footer>
+
+<script src="auth.js"></script>
+<script src="script.js"></script>
+</body>
+</html>

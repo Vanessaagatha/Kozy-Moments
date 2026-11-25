@@ -1,0 +1,878 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>KoMo Plans 💜 — Choose Your Space</title>
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300;400;500;600;700&family=Nunito:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+
+  <style>
+    .pricing-hero {
+      text-align: center;
+      padding: 80px 8% 50px;
+      position: relative;
+      z-index: 1;
+    }
+    .pricing-hero .eyebrow {
+      display: inline-block;
+      background: var(--blush);
+      color: var(--lavender-dk);
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      padding: 5px 18px;
+      border-radius: 50px;
+      margin-bottom: 20px;
+    }
+    .pricing-hero h2 {
+      font-family: 'Fredoka', sans-serif;
+      font-size: 52px;
+      font-weight: 700;
+      color: var(--lavender-dk);
+      line-height: 1.15;
+      margin-bottom: 16px;
+    }
+    .pricing-hero p {
+      font-size: 18px;
+      color: var(--text-soft);
+      max-width: 520px;
+      margin: 0 auto 32px;
+      line-height: 1.7;
+    }
+    .billing-toggle {
+      display: inline-flex;
+      align-items: center;
+      gap: 14px;
+      background: rgba(255,255,255,0.75);
+      border-radius: 50px;
+      padding: 8px 20px;
+      box-shadow: var(--shadow-sm);
+      backdrop-filter: blur(12px);
+      font-weight: 600;
+      color: var(--text-soft);
+      margin-bottom: 12px;
+      font-size: 15px;
+    }
+    .toggle-switch {
+      position: relative;
+      width: 52px;
+      height: 28px;
+      cursor: pointer;
+    }
+    .toggle-switch input { display: none; }
+    .toggle-track {
+      position: absolute;
+      inset: 0;
+      background: var(--lavender);
+      border-radius: 50px;
+      transition: background 0.3s;
+    }
+    .toggle-switch input:checked + .toggle-track { background: var(--lavender-dk); }
+    .toggle-knob {
+      position: absolute;
+      top: 4px; left: 4px;
+      width: 20px; height: 20px;
+      background: white;
+      border-radius: 50%;
+      transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+      box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+    }
+    .toggle-switch input:checked ~ .toggle-knob { transform: translateX(24px); }
+    .save-badge {
+      display: inline-block;
+      background: var(--sage);
+      color: #4a6a3a;
+      font-size: 12px;
+      font-weight: 700;
+      padding: 3px 10px;
+      border-radius: 50px;
+      letter-spacing: 0.5px;
+    }
+    .plans-section {
+      padding: 20px 6% 80px;
+      position: relative;
+      z-index: 1;
+    }
+    .plans-grid {
+      display: flex;
+      gap: 24px;
+      flex-wrap: wrap;
+      justify-content: center;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+    .plan-card {
+      flex: 1;
+      min-width: 270px;
+      max-width: 330px;
+      background: rgba(255,255,255,0.82);
+      border-radius: var(--radius-xl);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      box-shadow: var(--shadow-md);
+      border: 2px solid rgba(255,255,255,0.7);
+      padding: 40px 36px 44px;
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.35s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    .plan-card:hover {
+      transform: translateY(-10px);
+      box-shadow: var(--shadow-lg);
+    }
+    .plan-card.popular {
+      background: linear-gradient(145deg, #b7a2e6 0%, #c9b8f0 50%, #d4c9f5 100%);
+      border-color: var(--lavender-dk);
+      color: white;
+    }
+    .popular-ribbon {
+      position: absolute;
+      top: 22px; right: -30px;
+      background: var(--blush-dk);
+      color: white;
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      padding: 6px 44px;
+      transform: rotate(40deg);
+      box-shadow: 0 2px 10px rgba(0,0,0,0.12);
+    }
+    .plan-icon { font-size: 44px; margin-bottom: 16px; display: block; }
+    .plan-name {
+      font-family: 'Fredoka', sans-serif;
+      font-size: 28px;
+      font-weight: 700;
+      color: var(--lavender-dk);
+      margin-bottom: 6px;
+    }
+    .plan-card.popular .plan-name { color: white; }
+    .plan-desc {
+      font-size: 14px;
+      color: var(--text-soft);
+      margin-bottom: 28px;
+      line-height: 1.6;
+    }
+    .plan-card.popular .plan-desc { color: rgba(255,255,255,0.85); }
+    .plan-price { margin-bottom: 28px; }
+    .price-amount {
+      font-family: 'Fredoka', sans-serif;
+      font-size: 48px;
+      font-weight: 700;
+      color: var(--lavender-dk);
+      line-height: 1;
+    }
+    .plan-card.popular .price-amount { color: white; }
+    .price-currency {
+      font-size: 22px;
+      font-weight: 600;
+      vertical-align: top;
+      margin-top: 6px;
+      display: inline-block;
+    }
+    .price-period {
+      font-size: 14px;
+      color: var(--text-soft);
+      margin-top: 4px;
+    }
+    .plan-card.popular .price-period { color: rgba(255,255,255,0.8); }
+    .price-yearly { display: none; }
+    body.yearly .price-monthly { display: none; }
+    body.yearly .price-yearly { display: block; }
+    .plan-features {
+      list-style: none;
+      margin-bottom: 36px;
+      flex: 1;
+    }
+    .plan-features li {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      font-size: 14px;
+      color: var(--text);
+      padding: 8px 0;
+      border-bottom: 1px solid rgba(183,162,230,0.12);
+      line-height: 1.5;
+    }
+    .plan-features li:last-child { border-bottom: none; }
+    .plan-card.popular .plan-features li { color: rgba(255,255,255,0.92); border-bottom-color: rgba(255,255,255,0.15); }
+    .feat-check { font-size: 16px; flex-shrink: 0; margin-top: 1px; }
+    .feat-x { font-size: 16px; flex-shrink: 0; opacity: 0.35; margin-top: 1px; }
+    .btn-plan {
+      display: block;
+      width: 100%;
+      padding: 16px;
+      border-radius: 50px;
+      border: none;
+      font-family: 'Fredoka', sans-serif;
+      font-size: 18px;
+      font-weight: 600;
+      cursor: pointer;
+      text-align: center;
+      text-decoration: none;
+      transition: var(--transition);
+    }
+    .btn-plan-outline {
+      background: transparent;
+      border: 2px solid var(--lavender);
+      color: var(--lavender-dk);
+    }
+    .btn-plan-outline:hover {
+      background: var(--lavender-lt);
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-sm);
+    }
+    .btn-plan-fill {
+      background: white;
+      color: var(--lavender-dk);
+      box-shadow: 0 6px 24px rgba(0,0,0,0.15);
+    }
+    .btn-plan-fill:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 32px rgba(0,0,0,0.2);
+    }
+    .btn-plan-primary {
+      background: linear-gradient(135deg, var(--lavender-dk), #a084d8);
+      color: white;
+      box-shadow: var(--shadow-md);
+    }
+    .btn-plan-primary:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 36px rgba(143,114,218,0.5);
+    }
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(74,63,107,0.55);
+      backdrop-filter: blur(8px);
+      z-index: 999;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+    .modal-overlay.open { display: flex; }
+    .modal-box {
+      background: rgba(255,255,255,0.97);
+      border-radius: var(--radius-xl);
+      padding: 48px 44px;
+      max-width: 480px;
+      width: 100%;
+      box-shadow: var(--shadow-lg);
+      border: 2px solid rgba(183,162,230,0.2);
+      position: relative;
+      animation: popIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+    @keyframes popIn {
+      from { opacity: 0; transform: scale(0.88) translateY(20px); }
+      to   { opacity: 1; transform: scale(1) translateY(0); }
+    }
+    .modal-close {
+      position: absolute;
+      top: 18px; right: 22px;
+      background: var(--lavender-lt);
+      border: none;
+      border-radius: 50%;
+      width: 36px; height: 36px;
+      font-size: 18px;
+      cursor: pointer;
+      color: var(--lavender-dk);
+      display: flex; align-items: center; justify-content: center;
+      transition: var(--transition);
+    }
+    .modal-close:hover { background: var(--blush); transform: rotate(90deg); }
+    .modal-plan-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--lavender-lt);
+      color: var(--lavender-dk);
+      font-weight: 700;
+      font-size: 14px;
+      padding: 6px 16px;
+      border-radius: 50px;
+      margin-bottom: 20px;
+    }
+    .modal-box h3 {
+      font-family: 'Fredoka', sans-serif;
+      font-size: 30px;
+      color: var(--lavender-dk);
+      margin-bottom: 8px;
+    }
+    .modal-box p.modal-sub {
+      font-size: 15px;
+      color: var(--text-soft);
+      margin-bottom: 28px;
+    }
+    .modal-total {
+      background: var(--lavender-lt);
+      border-radius: var(--radius-md);
+      padding: 18px 22px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 28px;
+    }
+    .modal-total span { font-size: 15px; color: var(--text-soft); }
+    .modal-total strong {
+      font-family: 'Fredoka', sans-serif;
+      font-size: 28px;
+      color: var(--lavender-dk);
+    }
+    .payment-methods {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-bottom: 28px;
+    }
+    .pay-method {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      background: white;
+      border: 2px solid rgba(183,162,230,0.25);
+      border-radius: var(--radius-md);
+      padding: 14px 20px;
+      cursor: pointer;
+      transition: var(--transition);
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--text);
+    }
+    .pay-method:hover {
+      border-color: var(--lavender);
+      background: var(--lavender-lt);
+      transform: translateX(4px);
+    }
+    .pay-method.selected {
+      border-color: var(--lavender-dk);
+      background: var(--lavender-lt);
+    }
+    .pay-method .pay-icon { font-size: 26px; }
+    .pay-method .pay-label { flex: 1; }
+    .pay-method .pay-tag {
+      font-size: 11px;
+      background: var(--blush);
+      color: var(--lavender-dk);
+      padding: 3px 10px;
+      border-radius: 50px;
+      font-weight: 700;
+    }
+    .btn-pay-now {
+      display: block;
+      width: 100%;
+      padding: 18px;
+      border-radius: 50px;
+      border: none;
+      background: linear-gradient(135deg, var(--lavender-dk), #a084d8);
+      color: white;
+      font-family: 'Fredoka', sans-serif;
+      font-size: 20px;
+      font-weight: 600;
+      cursor: pointer;
+      box-shadow: var(--shadow-md);
+      transition: var(--transition);
+    }
+    .btn-pay-now:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 36px rgba(143,114,218,0.5);
+    }
+    .btn-pay-now:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      transform: none;
+    }
+    .secure-note {
+      text-align: center;
+      font-size: 12px;
+      color: var(--text-soft);
+      margin-top: 14px;
+    }
+    .success-box { text-align: center; }
+    .success-box .success-emoji {
+      font-size: 70px;
+      display: block;
+      margin-bottom: 20px;
+      animation: bounceIn 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+    @keyframes bounceIn {
+      from { transform: scale(0); opacity: 0; }
+      to   { transform: scale(1); opacity: 1; }
+    }
+    .success-box h3 {
+      font-family: 'Fredoka', sans-serif;
+      font-size: 32px;
+      color: var(--lavender-dk);
+      margin-bottom: 10px;
+    }
+    .success-box p { font-size: 15px; color: var(--text-soft); margin-bottom: 28px; line-height: 1.7; }
+    .faq-section {
+      padding: 20px 8% 80px;
+      max-width: 780px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 1;
+    }
+    .faq-section h2 {
+      font-family: 'Fredoka', sans-serif;
+      font-size: 38px;
+      color: var(--lavender-dk);
+      text-align: center;
+      margin-bottom: 36px;
+    }
+    .faq-item {
+      background: rgba(255,255,255,0.78);
+      border-radius: var(--radius-lg);
+      border: 1.5px solid rgba(183,162,230,0.18);
+      margin-bottom: 14px;
+      overflow: hidden;
+      box-shadow: var(--shadow-sm);
+      transition: box-shadow 0.3s;
+    }
+    .faq-item.open { box-shadow: var(--shadow-md); }
+    .faq-q {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 28px;
+      cursor: pointer;
+      font-weight: 700;
+      font-size: 16px;
+      color: var(--text);
+      user-select: none;
+    }
+    .faq-q:hover { color: var(--lavender-dk); }
+    .faq-chevron {
+      font-size: 22px;
+      transition: transform 0.3s ease;
+      color: var(--lavender-dk);
+    }
+    .faq-item.open .faq-chevron { transform: rotate(180deg); }
+    .faq-a {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.4s ease, padding 0.3s;
+      padding: 0 28px;
+      font-size: 15px;
+      color: var(--text-soft);
+      line-height: 1.75;
+    }
+    .faq-item.open .faq-a {
+      max-height: 200px;
+      padding: 0 28px 22px;
+    }
+    .compare-section {
+      padding: 20px 6% 70px;
+      position: relative;
+      z-index: 1;
+    }
+    .compare-section h2 {
+      font-family: 'Fredoka', sans-serif;
+      font-size: 38px;
+      color: var(--lavender-dk);
+      text-align: center;
+      margin-bottom: 8px;
+    }
+    .compare-section .section-sub {
+      text-align: center;
+      color: var(--text-soft);
+      margin-bottom: 36px;
+      font-size: 16px;
+    }
+    .compare-table {
+      max-width: 800px;
+      margin: 0 auto;
+      background: rgba(255,255,255,0.82);
+      border-radius: var(--radius-xl);
+      overflow: hidden;
+      box-shadow: var(--shadow-md);
+      border: 1.5px solid rgba(255,255,255,0.7);
+      backdrop-filter: blur(16px);
+    }
+    .compare-table table { width: 100%; border-collapse: collapse; }
+    .compare-table thead th {
+      padding: 22px 20px;
+      font-family: 'Fredoka', sans-serif;
+      font-size: 18px;
+      font-weight: 600;
+      color: var(--lavender-dk);
+      background: var(--lavender-lt);
+      text-align: center;
+    }
+    .compare-table thead th:first-child { text-align: left; }
+    .compare-table thead th.th-popular { background: var(--lavender-dk); color: white; }
+    .compare-table tbody td {
+      padding: 14px 20px;
+      font-size: 14px;
+      color: var(--text);
+      border-bottom: 1px solid rgba(183,162,230,0.1);
+      text-align: center;
+    }
+    .compare-table tbody td:first-child { text-align: left; font-weight: 600; color: var(--text); }
+    .compare-table tbody tr:last-child td { border-bottom: none; }
+    .compare-table tbody tr:hover td { background: rgba(239,228,255,0.3); }
+    @media (max-width: 900px) {
+      .pricing-hero h2 { font-size: 38px; }
+      .plans-grid { flex-direction: column; align-items: center; }
+      .plan-card { max-width: 100%; }
+      .modal-box { padding: 36px 28px; }
+      .compare-table { overflow-x: auto; display: block; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="sparkle s1">✨</div>
+<div class="sparkle s2">🌸</div>
+<div class="sparkle s3">💜</div>
+<div class="sparkle s4">☁️</div>
+
+<header>
+  <a class="logo-section" href="index.html" style="text-decoration:none;">
+    <img src="logo.png" alt="KoMo logo">
+    <h1>KoMo</h1>
+  </a>
+  <nav>
+    <div class="dropdown">
+      <button class="dropbtn">🌸 Let's Play ▾</button>
+      <div class="dropdown-content">
+        <a href="journal.html">📔 Journal Space</a>
+        <a href="memorylane.html">📸 Down Memory Lane</a>
+      </div>
+    </div>
+    <div class="dropdown">
+      <button class="dropbtn">💜 About ▾</button>
+      <div class="dropdown-content">
+        <a href="about.html">🌿 About KoMo</a>
+      </div>
+    </div>
+    <a href="pricing.html" class="btn-primary" style="text-decoration:none;padding:10px 22px;font-size:15px;">💎 Plans</a>
+  </nav>
+</header>
+
+<section class="pricing-hero">
+  <span class="eyebrow fade-up">💎 Choose Your Plan</span>
+  <h2 class="fade-up">Find Your Perfect<br>KoMo Space 🌸</h2>
+  <p class="fade-up">Start free, upgrade when you're ready. Every plan keeps your memories safe and your heart full 💜</p>
+  <div class="billing-toggle fade-up">
+    <span>Monthly</span>
+    <label class="toggle-switch">
+      <input type="checkbox" id="billingToggle">
+      <span class="toggle-track"></span>
+      <span class="toggle-knob"></span>
+    </label>
+    <span>Yearly <span class="save-badge">Save 30%</span></span>
+  </div>
+</section>
+
+<section class="plans-section">
+  <div class="plans-grid">
+    <div class="plan-card fade-up" style="transition-delay:0.05s;">
+      <span class="plan-icon">🌿</span>
+      <div class="plan-name">Free</div>
+      <div class="plan-desc">Perfect to try KoMo and start your journey 🌱</div>
+      <div class="plan-price">
+        <div class="price-monthly">
+          <span class="price-amount"><span class="price-currency">Rp</span>0</span>
+          <div class="price-period">forever free</div>
+        </div>
+        <div class="price-yearly">
+          <span class="price-amount"><span class="price-currency">Rp</span>0</span>
+          <div class="price-period">forever free</div>
+        </div>
+      </div>
+      <ul class="plan-features">
+        <li><span class="feat-check">✅</span> Up to 5 journal entries</li>
+        <li><span class="feat-check">✅</span> Basic mood tracker</li>
+        <li><span class="feat-check">✅</span> 3 photobooth snaps/month</li>
+        <li><span class="feat-check">✅</span> 2 Memory Lane photos</li>
+        <li><span class="feat-x">✖️</span> Custom themes</li>
+        <li><span class="feat-x">✖️</span> Unlimited journal entries</li>
+        <li><span class="feat-x">✖️</span> Export & download</li>
+        <li><span class="feat-x">✖️</span> Exclusive card packs</li>
+      </ul>
+      <a href="journal.html" class="btn-plan btn-plan-outline">Start Free 🌿</a>
+    </div>
+
+    <div class="plan-card popular fade-up" style="transition-delay:0.15s;">
+      <div class="popular-ribbon">Most Loved</div>
+      <span class="plan-icon">🌸</span>
+      <div class="plan-name">KoMo Plus</div>
+      <div class="plan-desc">For teens who want the full cozy experience 💜</div>
+      <div class="plan-price">
+        <div class="price-monthly">
+          <span class="price-amount"><span class="price-currency">Rp</span>29K</span>
+          <div class="price-period">per month</div>
+        </div>
+        <div class="price-yearly">
+          <span class="price-amount"><span class="price-currency">Rp</span>20K</span>
+          <div class="price-period">per month · billed Rp 244K/yr</div>
+        </div>
+      </div>
+      <ul class="plan-features">
+        <li><span class="feat-check">✅</span> Unlimited journal entries</li>
+        <li><span class="feat-check">✅</span> All mood tracker features</li>
+        <li><span class="feat-check">✅</span> Unlimited photobooth snaps</li>
+        <li><span class="feat-check">✅</span> Unlimited Memory Lane photos</li>
+        <li><span class="feat-check">✅</span> 5 cute custom themes</li>
+        <li><span class="feat-check">✅</span> Export & download memories</li>
+        <li><span class="feat-check">✅</span> 1 exclusive card pack/month</li>
+        <li><span class="feat-x">✖️</span> Priority support</li>
+      </ul>
+      <button class="btn-plan btn-plan-fill" onclick="openModal('plus')">Get KoMo Plus 🌸</button>
+    </div>
+
+    <div class="plan-card fade-up" style="transition-delay:0.25s;">
+      <span class="plan-icon">💎</span>
+      <div class="plan-name">KoMo Pro</div>
+      <div class="plan-desc">Everything Plus, for the ultimate KoMo besties ✨</div>
+      <div class="plan-price">
+        <div class="price-monthly">
+          <span class="price-amount"><span class="price-currency">Rp</span>59K</span>
+          <div class="price-period">per month</div>
+        </div>
+        <div class="price-yearly">
+          <span class="price-amount"><span class="price-currency">Rp</span>41K</span>
+          <div class="price-period">per month · billed Rp 499K/yr</div>
+        </div>
+      </div>
+      <ul class="plan-features">
+        <li><span class="feat-check">✅</span> Everything in Plus</li>
+        <li><span class="feat-check">✅</span> All custom themes + new drops</li>
+        <li><span class="feat-check">✅</span> All card packs (Truth + Dare)</li>
+        <li><span class="feat-check">✅</span> Shared memory boards w/ besties</li>
+        <li><span class="feat-check">✅</span> Early access to new features</li>
+        <li><span class="feat-check">✅</span> Priority support 💜</li>
+        <li><span class="feat-check">✅</span> Exclusive Pro badge on profile</li>
+        <li><span class="feat-check">✅</span> Personalized mood insights</li>
+      </ul>
+      <button class="btn-plan btn-plan-primary" onclick="openModal('pro')">Get KoMo Pro 💎</button>
+    </div>
+  </div>
+</section>
+
+<section class="compare-section">
+  <h2 class="fade-up">Compare Plans ✨</h2>
+  <p class="section-sub fade-up">Everything side by side, so you can choose with confidence</p>
+  <div class="compare-table fade-up">
+    <table>
+      <thead>
+        <tr>
+          <th>Feature</th>
+          <th>Free 🌿</th>
+          <th class="th-popular">Plus 🌸</th>
+          <th>Pro 💎</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>Journal Entries</td><td>5 max</td><td>Unlimited</td><td>Unlimited</td></tr>
+        <tr><td>Photobooth Snaps</td><td>3/month</td><td>Unlimited</td><td>Unlimited</td></tr>
+        <tr><td>Memory Lane Photos</td><td>2</td><td>Unlimited</td><td>Unlimited</td></tr>
+        <tr><td>Mood Tracker</td><td>Basic</td><td>Full</td><td>Full + Insights</td></tr>
+        <tr><td>Custom Themes</td><td>❌</td><td>5 themes</td><td>All themes</td></tr>
+        <tr><td>Export & Download</td><td>❌</td><td>✅</td><td>✅</td></tr>
+        <tr><td>Card Packs</td><td>❌</td><td>1/month</td><td>All packs</td></tr>
+        <tr><td>Bestie Boards</td><td>❌</td><td>❌</td><td>✅</td></tr>
+        <tr><td>Priority Support</td><td>❌</td><td>❌</td><td>✅</td></tr>
+        <tr><td>Pro Badge</td><td>❌</td><td>❌</td><td>✅</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section class="faq-section">
+  <h2 class="fade-up">Questions? 🌸</h2>
+  <div class="faq-item fade-up">
+    <div class="faq-q" onclick="toggleFaq(this)">Can I cancel my plan anytime?<span class="faq-chevron">⌄</span></div>
+    <div class="faq-a">Yes, totally! You can cancel your plan at any time with no penalties. Your Premium features stay active until the end of your billing period 💜</div>
+  </div>
+  <div class="faq-item fade-up">
+    <div class="faq-q" onclick="toggleFaq(this)">What payment methods are accepted?<span class="faq-chevron">⌄</span></div>
+    <div class="faq-a">We accept GoPay, OVO, QRIS, Virtual Account (BCA, BNI, Mandiri), and credit/debit cards. All payments are processed securely via Midtrans 🔒</div>
+  </div>
+  <div class="faq-item fade-up">
+    <div class="faq-q" onclick="toggleFaq(this)">Is my data safe and private?<span class="faq-chevron">⌄</span></div>
+    <div class="faq-a">Absolutely! Your journal entries, photos, and memories are private and only visible to you. KoMo never sells or shares your personal data with anyone ✨</div>
+  </div>
+  <div class="faq-item fade-up">
+    <div class="faq-q" onclick="toggleFaq(this)">Can I switch between plans?<span class="faq-chevron">⌄</span></div>
+    <div class="faq-a">Yes! You can upgrade or downgrade at any time. If you upgrade mid-cycle, you'll only be charged the difference. Downgrading takes effect at the start of your next billing period 🌸</div>
+  </div>
+  <div class="faq-item fade-up">
+    <div class="faq-q" onclick="toggleFaq(this)">Is there a student discount?<span class="faq-chevron">⌄</span></div>
+    <div class="faq-a">KoMo is already priced for teens in mind! But if you're a student with a valid school email, DM us on Instagram for a special discount code 💜🎒</div>
+  </div>
+</section>
+
+<section class="cta-section">
+  <div class="cta-card fade-up">
+    <h2>Still not sure? Start free! 🌿</h2>
+    <p>No credit card needed. Upgrade whenever you feel ready ✨</p>
+    <a href="journal.html" class="btn-primary">Try KoMo Free 🌸</a>
+  </div>
+</section>
+
+<footer>
+  <span>Made with 🌸💜☁️ by KoMo</span>
+  <div class="footer-links">
+    <a href="index.html">Home</a>
+    <a href="journal.html">Journal</a>
+    <a href="memorylane.html">Memory Lane</a>
+    <a href="about.html">About</a>
+    <a href="pricing.html">Plans</a>
+  </div>
+</footer>
+
+<div class="modal-overlay" id="payModal">
+  <div class="modal-box" id="payModalBox">
+    <div id="stepPay">
+      <button class="modal-close" onclick="closeModal()">✕</button>
+      <div class="modal-plan-badge" id="modalBadge">🌸 KoMo Plus</div>
+      <h3>Complete Your Order 💜</h3>
+      <p class="modal-sub">Choose how you'd like to pay and we'll get you started right away!</p>
+      <div class="modal-total">
+        <span>Total <span id="billingLabel">monthly</span></span>
+        <strong id="modalPrice">Rp 29.000</strong>
+      </div>
+      <div class="payment-methods">
+        <div class="pay-method" onclick="selectMethod(this)" data-method="gopay">
+          <span class="pay-icon">💚</span><span class="pay-label">GoPay</span><span class="pay-tag">Popular</span>
+        </div>
+        <div class="pay-method" onclick="selectMethod(this)" data-method="ovo">
+          <span class="pay-icon">💜</span><span class="pay-label">OVO</span>
+        </div>
+        <div class="pay-method" onclick="selectMethod(this)" data-method="qris">
+          <span class="pay-icon">📱</span><span class="pay-label">QRIS</span><span class="pay-tag">All banks</span>
+        </div>
+        <div class="pay-method" onclick="selectMethod(this)" data-method="va">
+          <span class="pay-icon">🏦</span><span class="pay-label">Virtual Account (BCA / BNI / Mandiri)</span>
+        </div>
+        <div class="pay-method" onclick="selectMethod(this)" data-method="card">
+          <span class="pay-icon">💳</span><span class="pay-label">Credit / Debit Card</span>
+        </div>
+      </div>
+      <button class="btn-pay-now" id="btnPayNow" onclick="processPayment()" disabled>Pay Now 💜</button>
+      <p class="secure-note">🔒 Secured by Midtrans · Your data is always private</p>
+    </div>
+    <div id="stepProcessing" style="display:none;text-align:center;padding:20px 0;">
+      <div style="font-size:60px;margin-bottom:20px;animation:floatDeco 1.5s ease-in-out infinite;">💜</div>
+      <h3 style="font-family:'Fredoka',sans-serif;font-size:26px;color:var(--lavender-dk);margin-bottom:10px;">Processing...</h3>
+      <p style="color:var(--text-soft);font-size:15px;">Connecting to payment gateway 🌸</p>
+    </div>
+    <div id="stepSuccess" class="success-box" style="display:none;">
+      <span class="success-emoji">🎉</span>
+      <h3>Welcome to KoMo <span id="successPlan"></span>!</h3>
+      <p>Your plan is now active. Time to fill your space with memories, feelings, and all the cute moments 🌸💜✨</p>
+      <a href="journal.html" class="btn-plan btn-plan-primary" style="display:inline-block;max-width:260px;margin:0 auto;">Start Journaling 📔</a>
+    </div>
+  </div>
+</div>
+
+<script src="auth.js"></script>
+<script src="script.js"></script>
+<script>
+  const billingToggle = document.getElementById('billingToggle');
+  billingToggle.addEventListener('change', () => {
+    document.body.classList.toggle('yearly', billingToggle.checked);
+  });
+
+  let currentPlan = 'plus';
+  const planData = {
+    plus: { monthly: 'Rp 29.000', yearly: 'Rp 244.000', label: '🌸 KoMo Plus', name: 'Plus 🌸' },
+    pro:  { monthly: 'Rp 59.000', yearly: 'Rp 499.000', label: '💎 KoMo Pro',  name: 'Pro 💎'  }
+  };
+
+  function openModal(plan) {
+    // make sure upgrades attach to a real account
+    if (!(window.KomoAuth && KomoAuth.isLoggedIn())) {
+      showToast('Make an account first so your plan is saved 💜');
+      openAuthModal('signup');
+      pendingPlan = plan;
+      return;
+    }
+    currentPlan = plan;
+    const isYearly = billingToggle.checked;
+    const data = planData[plan];
+    document.getElementById('modalBadge').textContent = data.label;
+    document.getElementById('modalPrice').textContent = isYearly ? data.yearly : data.monthly;
+    document.getElementById('billingLabel').textContent = isYearly ? 'yearly' : 'monthly';
+    document.getElementById('stepPay').style.display = '';
+    document.getElementById('stepProcessing').style.display = 'none';
+    document.getElementById('stepSuccess').style.display = 'none';
+    document.querySelectorAll('.pay-method').forEach(m => m.classList.remove('selected'));
+    document.getElementById('btnPayNow').disabled = true;
+    document.getElementById('payModal').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  // if they signed up from the pay flow, continue to checkout afterwards
+  let pendingPlan = null;
+  document.addEventListener('komo:authchange', () => {
+    reflectCurrentPlan();
+    if (pendingPlan && KomoAuth.isLoggedIn()) {
+      const p = pendingPlan; pendingPlan = null;
+      setTimeout(() => openModal(p), 400);
+    }
+  });
+
+  function closeModal() {
+    document.getElementById('payModal').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  document.getElementById('payModal').addEventListener('click', function(e) {
+    if (e.target === this) closeModal();
+  });
+
+  function selectMethod(el) {
+    document.querySelectorAll('.pay-method').forEach(m => m.classList.remove('selected'));
+    el.classList.add('selected');
+    document.getElementById('btnPayNow').disabled = false;
+  }
+
+  function processPayment() {
+    document.getElementById('stepPay').style.display = 'none';
+    document.getElementById('stepProcessing').style.display = '';
+    setTimeout(() => {
+      document.getElementById('stepProcessing').style.display = 'none';
+      document.getElementById('stepSuccess').style.display = '';
+      document.getElementById('successPlan').textContent = planData[currentPlan].name;
+      // 🎉 save the upgrade to the user's account
+      if (window.KomoAuth) KomoAuth.setPlan(currentPlan);
+      reflectCurrentPlan();
+    }, 2200);
+  }
+
+  // show which plan the logged-in user is currently on
+  function reflectCurrentPlan() {
+    const plan = (window.KomoAuth) ? KomoAuth.getPlan() : 'free';
+    const map = {
+      free: '.plan-card:nth-child(1)',
+      plus: '.plan-card:nth-child(2)',
+      pro:  '.plan-card:nth-child(3)'
+    };
+    document.querySelectorAll('.plan-card .current-plan-flag').forEach(f => f.remove());
+    if (!KomoAuth || !KomoAuth.isLoggedIn()) return;
+    const card = document.querySelector(map[plan]);
+    if (card) {
+      const flag = document.createElement('div');
+      flag.className = 'current-plan-flag';
+      flag.textContent = '✓ Your current plan';
+      card.appendChild(flag);
+    }
+  }
+  document.addEventListener('DOMContentLoaded', reflectCurrentPlan);
+
+  function toggleFaq(el) {
+    const item = el.parentElement;
+    const isOpen = item.classList.contains('open');
+    document.querySelectorAll('.faq-item').forEach(f => f.classList.remove('open'));
+    if (!isOpen) item.classList.add('open');
+  }
+</script>
+</body>
+</html>
